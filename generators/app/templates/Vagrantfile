@@ -4,6 +4,7 @@ $IP = "10.0.0.10"
 $MEMORY = ENV.has_key?('VM_MEMORY') ? ENV['VM_MEMORY'] : "1024"
 $CPUS = ENV.has_key?('VM_CPUS') ? ENV['VM_CPUS'] : "1"
 $EXEC_CAP = ENV.has_key?('VM_EXEC_CAP') ? ENV['VM_EXEC_CAP'] : "100"
+$BACKEND = ("<%= backend%>" == "API Platform (Symfony)") ? "symfony" : "node"
 
 Vagrant.configure("2") do |config|
   config.vm.hostname = $HOSTNAME
@@ -21,8 +22,8 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "devops/provisioning/playbook.yml"
-    ansible.inventory_path = "devops/provisioning/hosts/vagrant"
+    ansible.playbook = "devops-" + $BACKEND + "/provisioning/playbook.yml"
+    ansible.inventory_path = "devops-" + $BACKEND + "/provisioning/hosts/vagrant"
     ansible.limit = 'all'
   end
 
