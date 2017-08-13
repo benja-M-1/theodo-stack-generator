@@ -36,6 +36,7 @@ class StackGenerator extends Generator {
       }
 
       if (this.answers.backend === 'none') {
+        this.answers.clientPublicDirectory = 'client/dist';
         return Promise.resolve();
       }
 
